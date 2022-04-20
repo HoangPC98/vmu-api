@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  eco-api:
+    container_name: eco-api
+    image: eco-api
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    environment:
+      LOG_LEVEL: debug
+      DATABASE_HOST: eco-dbsql
+    ports:
+      - '127.0.0.1:3001:3000'
+    depends_on:
+      - eco-dbsql
+    restart: always
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '5'
+        max-size: '10m'
+
+  eco-dbsql:
+    container_name: eco-dbsql
+    build:
+      context: ./mysql
+    environment:
+      MYSQL_HOST: '0.0.0.0'
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: eco
+      MYSQL_USER: eco
+      MYSQL_PASSWORD: eco
+    ports:
+      - '127.0.0.1:3306:3306'
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '5'
+        max-size: '10m'
