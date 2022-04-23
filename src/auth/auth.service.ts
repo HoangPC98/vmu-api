@@ -4,7 +4,7 @@ import {
   Logger,
   UnauthorizedException,
 } from '@nestjs/common';
-import { User } from '../database/entities/user.entity';
+import { User } from '../database/entities/hoc_vien.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -29,32 +29,10 @@ export class AuthService {
     this.oAuth2Client = new GoogleOAuth2Client(clientId, clientSecret);
   }
 
-  async loginGoogle(googleToken: string) {
-    const FUNC_NAME = 'loginGoogle';
+  async login(username: string, password: string) {
+    const FUNC_NAME = 'login';
 
     const { clientId, authorizedDomain } = this.configService.get('googleAuth');
-
-    let ggLoginTicket: LoginTicket;
-    try {
-      ggLoginTicket = await this.oAuth2Client.verifyIdToken({
-        idToken: googleToken,
-        audience: clientId,
-      });
-    } catch (error) {
-      this.logger.error(
-        `${FUNC_NAME} verify token on google failure: ${error}`,
-      );
-      throw new UnauthorizedException();
-    }
-    const { hd: domain, email_verified, email } = ggLoginTicket.getPayload();
-
-    if (domain !== authorizedDomain || !email_verified) {
-      this.logger.error(
-        `${FUNC_NAME}
-          domain ${domain} not authorized or email ${email} not verified`,
-      );
-      throw new UnauthorizedException();
-    }
 
     const userRecs = await this.usersRepository.find({
       where: { email },

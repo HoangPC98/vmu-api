@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateOffworkDto } from './dto/create-offwork.dto';
 import { UpdateOffworkDto } from './dto/update-offwork.dto';
-import { Offwork } from '../database/entities/offwork.entity';
+import { Offwork } from '../database/entities/user_info.entity';
 import { Review, ReviewStatus } from '../database/entities/review.entity';
 import { GetAllOffworkQuery } from './dto/getall-offwork.query';
 

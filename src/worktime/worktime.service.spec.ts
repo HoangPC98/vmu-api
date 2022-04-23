@@ -3,7 +3,7 @@ import { WorkTime } from '../database/entities/worktime.entity';
 import { WorkType } from '../database/entities/worktype.entity';
 import { WorktimeService } from './worktime.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '../database/entities/user.entity';
+import { User } from '../database/entities/hoc_vien.entity';
 
 const datas = [
   {

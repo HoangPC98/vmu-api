@@ -17,7 +17,7 @@ import { GetAllOffworkQuery } from './dto/getall-offwork.query';
 import { AppAbility } from '../casl/casl-ability.factory';
 import { CheckPolicies } from '../casl/decorators/CheckPolicies';
 import { Action } from '../casl/Action';
-import { Offwork } from '../database/entities/offwork.entity';
+import { Offwork } from '../database/entities/user_info.entity';
 import { subject } from '@casl/ability';
 
 @ApiBearerAuth()

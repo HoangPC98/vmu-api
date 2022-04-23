@@ -4,7 +4,7 @@ import { CheckinoutController } from './checkinout.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WorkTime } from '../database/entities/worktime.entity';
 import { WorkType } from '../database/entities/worktype.entity';
-import { User } from '../database/entities/user.entity';
+import { User } from '../database/entities/hoc_vien.entity';
 import { WorktimeService } from '../worktime/worktime.service';
 @Module({
   imports: [TypeOrmModule.forFeature([WorkTime, WorkType, User])],

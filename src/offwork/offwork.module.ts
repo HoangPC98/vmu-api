@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { OffworkService } from './offwork.service';
 import { OffworkController } from './offwork.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Offwork } from '../database/entities/offwork.entity';
+import { Offwork } from '../database/entities/user_info.entity';
 import { Review } from '../database/entities/review.entity';
 import { CaslModule } from 'src/casl/casl.module';
 

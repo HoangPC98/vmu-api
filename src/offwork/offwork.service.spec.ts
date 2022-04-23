@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Offwork } from '../database/entities/offwork.entity';
+import { Offwork } from '../database/entities/user_info.entity';
 import { OffworkService } from './offwork.service';
 import { Repository } from 'typeorm';
 import { CreateOffworkDto } from './dto/create-offwork.dto';

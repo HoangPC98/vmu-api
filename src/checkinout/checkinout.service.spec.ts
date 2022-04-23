@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '../database/entities/user.entity';
+import { User } from '../database/entities/hoc_vien.entity';
 import { WorkTime } from '../database/entities/worktime.entity';
 import { WorkType } from '../database/entities/worktype.entity';
 import { WorktimeService } from '../worktime/worktime.service';

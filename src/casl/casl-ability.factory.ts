@@ -8,8 +8,8 @@ import {
   RawRuleOf,
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
-import { User } from '../database/entities/user.entity';
-import { Offwork } from '../database/entities/offwork.entity';
+import { User } from '../database/entities/hoc_vien.entity';
+import { Offwork } from '../database/entities/user_info.entity';
 import { Review } from '../database/entities/review.entity';
 import { UserType } from '../database/entities/usertype.entity';
 import { WorkType } from '../database/entities/worktype.entity';

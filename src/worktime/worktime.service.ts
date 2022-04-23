@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { WorkTime } from '../database/entities/worktime.entity';
 import { WorkType } from '../database/entities/worktype.entity';
 import { Repository } from 'typeorm';
-import { User } from '../database/entities/user.entity';
+import { User } from '../database/entities/hoc_vien.entity';
 import { IdWorktype } from '../constants/worktype.constant';
 @Injectable()
 export class WorktimeService {

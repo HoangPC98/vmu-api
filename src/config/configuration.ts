@@ -2,17 +2,12 @@ export default () => ({
   port: parseInt(process.env.PORT, 10) || 3000,
   database: {
     type: 'mysql',
-    username: process.env.DATABASE_USERNAME || 'eco',
-    password: process.env.DATABASE_PASSWORD || 'eco',
-    database: process.env.DATABASE_NAME || 'eco',
-    host: process.env.DATABASE_HOST || 'localhost',
-    port: parseInt(process.env.DATABASE_PORT, 10) || 3306,
-    logging: process.env.DATABASE_LOGGING ? true : false,
-  },
-  googleAuth: {
-    authorizedDomain: process.env.GOOGLE_AUTHORIZED_DOMAIN || 'mirabo.com.vn',
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRECT,
+    username: process.env.DB_USER || 'vmu',
+    password: process.env.DB_PASSWORD || 'vmu',
+    database: process.env.DB_NAME || 'vmu',
+    host: process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DB_PORT, 10) || 3306,
+    logging: process.env.DB_LOGGING ? true : false,
   },
   jwtAuth: {
     access_token_ttl: process.env.JWT_ACCESS_TOKEN_TTL || '15m',

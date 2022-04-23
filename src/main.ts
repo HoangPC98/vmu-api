@@ -22,8 +22,8 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformResponseInterceptor());
 
   const config = new DocumentBuilder()
-    .setTitle('Mirabo eco API')
-    .setDescription('Mirabo eco API description')
+    .setTitle('VMU API')
+    .setDescription('VMU API description')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
