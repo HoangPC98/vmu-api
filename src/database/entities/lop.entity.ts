@@ -8,7 +8,6 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import CustomBaseEntity from './base.entity';
-import { UserInfo } from './user_info.entity';
 
 export enum HeDaoTao {
 	KI_SU = 'ki_su',
@@ -16,8 +15,8 @@ export enum HeDaoTao {
 	TIEN_SI = 'tien_si'
 }
 
-@Entity('lop_hoc_phan')
-export class LopHocPhan extends CustomBaseEntity {
+@Entity('lop')
+export class Lop extends CustomBaseEntity {
   @PrimaryColumn()
   id: string;
 

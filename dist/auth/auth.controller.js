@@ -16,22 +16,20 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const auth_service_1 = require("./auth.service");
+const getCurrentUser_auth_1 = require("./decorators/getCurrentUser.auth");
 const public_auth_1 = require("./decorators/public.auth");
-const googleAuth_dto_1 = require("./dto/googleAuth.dto");
-const refreshToken_dto_1 = require("./dto/refreshToken.dto");
+const login_dto_1 = require("./dto/login.dto");
+const signUp_dto_1 = require("./dto/signUp.dto");
 const verifyAtoken_dto_1 = require("./dto/verifyAtoken.dto");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    async loginGoogle(googleAuthDto) {
-        const token = await this.authService.loginGoogle(googleAuthDto.googleToken);
-        return {
-            result: token,
-        };
+    async signUp(signUpBody) {
+        return await this.authService.signUp(signUpBody);
     }
-    async refreshTokens(refreshTokenDto) {
-        const token = await this.authService.refreshTokens(refreshTokenDto.refreshToken);
+    async login(loginDto) {
+        const token = await this.authService.login(loginDto.username, loginDto.password);
         return {
             result: token,
         };
@@ -42,33 +40,34 @@ let AuthController = class AuthController {
             result: validate_token,
         };
     }
+    async logOut(userLoggedin) {
+        await this.authService.logOut(userLoggedin);
+        return {
+            message: 'logout success',
+        };
+    }
 };
+__decorate([
+    (0, public_auth_1.Public)(),
+    (0, common_1.Post)('sign-up'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [signUp_dto_1.SignUpDto]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "signUp", null);
 __decorate([
     (0, public_auth_1.Public)(),
     (0, swagger_1.ApiResponse)({
         status: 200,
         description: 'return access token and refresh token',
     }),
-    (0, common_1.Post)('googles'),
+    (0, common_1.Post)('login'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [googleAuth_dto_1.GoogleAuthDto]),
+    __metadata("design:paramtypes", [login_dto_1.LoginDto]),
     __metadata("design:returntype", Promise)
-], AuthController.prototype, "loginGoogle", null);
+], AuthController.prototype, "login", null);
 __decorate([
-    (0, public_auth_1.Public)(),
-    (0, swagger_1.ApiResponse)({
-        status: 201,
-        description: 'return access token and refresh token',
-    }),
-    (0, common_1.Post)('refresh'),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [refreshToken_dto_1.RefreshTokenDto]),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "refreshTokens", null);
-__decorate([
-    (0, public_auth_1.Public)(),
     (0, swagger_1.ApiResponse)({
         status: 200,
         description: 'verify if logged in',
@@ -79,6 +78,14 @@ __decorate([
     __metadata("design:paramtypes", [verifyAtoken_dto_1.AccessTokenDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "verifyAccessToken", null);
+__decorate([
+    (0, swagger_1.ApiOkResponse)({ description: 'logout success' }),
+    (0, common_1.Get)('logout'),
+    __param(0, (0, getCurrentUser_auth_1.GetCurrentUserLogin)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "logOut", null);
 AuthController = __decorate([
     (0, swagger_1.ApiTags)('auth'),
     (0, common_1.Controller)('auth'),

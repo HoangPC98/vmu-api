@@ -13,8 +13,8 @@ const typeorm_1 = require("typeorm");
 class CustomBaseEntity extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
-        this.createdAt = new Date();
-        this.updatedAt = new Date();
+        this.created_at = new Date();
+        this.updated_at = new Date();
     }
 }
 __decorate([
@@ -22,18 +22,18 @@ __decorate([
         nullable: false,
     }),
     __metadata("design:type", Date)
-], CustomBaseEntity.prototype, "createdAt", void 0);
+], CustomBaseEntity.prototype, "created_at", void 0);
 __decorate([
     (0, typeorm_1.UpdateDateColumn)({
         nullable: false,
     }),
     __metadata("design:type", Date)
-], CustomBaseEntity.prototype, "updatedAt", void 0);
+], CustomBaseEntity.prototype, "updated_at", void 0);
 __decorate([
     (0, typeorm_1.DeleteDateColumn)({
         nullable: true,
     }),
     __metadata("design:type", Date)
-], CustomBaseEntity.prototype, "deletedAt", void 0);
+], CustomBaseEntity.prototype, "deleted_at", void 0);
 exports.default = CustomBaseEntity;
 //# sourceMappingURL=base.entity.js.map

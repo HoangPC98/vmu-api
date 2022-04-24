@@ -3,16 +3,20 @@ import {
   Injectable,
   Logger,
   UnauthorizedException,
-} from '@nestjs/common';
-import { User } from '../database/entities/hoc_vien.entity';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
+} from "@nestjs/common";
+import { HocVien } from "../database/entities/hoc_vien.entity";
+import { In, Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
 import {
   LoginTicket,
   OAuth2Client as GoogleOAuth2Client,
-} from 'google-auth-library';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+} from "google-auth-library";
+import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
+import { PhienDangNhap } from "src/database/entities/phien_dang_nhap.entity";
+import { SignUpDto } from "./dto/signUp.dto";
+import { User } from "src/database/entities/user.entity";
+import { JwtPayload } from "./JwtPayload";
 
 @Injectable()
 export class AuthService {
@@ -22,73 +26,102 @@ export class AuthService {
   constructor(
     private readonly configService: ConfigService,
     @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(PhienDangNhap)
+    private readonly userLogin: Repository<PhienDangNhap>,
     private readonly jwtService: JwtService,
-  ) {
-    const { clientId, clientSecret } = this.configService.get('googleAuth');
-    this.oAuth2Client = new GoogleOAuth2Client(clientId, clientSecret);
+  ) {}
+
+  async signUp(signUpDto: SignUpDto) {
+    console.log("OKOOKOKO");
+    const foundUser = await this.userRepository.findOne({
+      where: { username: signUpDto.username, email: signUpDto.email },
+    });
+
+    console.log("foundUser", foundUser);
+
+    if (foundUser)
+      throw new BadRequestException(
+        "this user name or email exist, please try again",
+      );
+    try {
+      let newUser = new User();
+      newUser.username = signUpDto.username;
+      newUser.email = signUpDto.email;
+      newUser.password = signUpDto.password;
+      newUser.user_type = signUpDto.user_type;
+      console.log("new user created", newUser);
+      const result = await this.userRepository.save(newUser);
+      return {
+        message: "ok",
+        result: result,
+      };
+    } catch (error) {
+      this.logger.error(error.message);
+      throw new Error(error.message);
+    }
   }
 
   async login(username: string, password: string) {
-    const FUNC_NAME = 'login';
+    const FUNC_NAME = "login";
 
-    const { clientId, authorizedDomain } = this.configService.get('googleAuth');
-
-    const userRecs = await this.usersRepository.find({
-      where: { email },
-      relations: ['userType'],
+    const foundUser = await this.userRepository.findOne({
+      where: { username: username, password: password },
+      // relations: ['role'],
     });
 
-    if (!userRecs || userRecs.length <= 0) {
-      this.logger.error(
-        `${FUNC_NAME} not found user with email ${email} in database`,
-      );
-      throw new UnauthorizedException();
+    // const foundUser = await this.userRepository
+    //   .createQueryBuilder("user")
+    //   .where("username =: username", { username })
+    //   .leftJoin('')
+    console.log("foun", foundUser);
+
+    if (!foundUser) throw new BadRequestException("wrong username of password");
+    else {
+      const foundUserLoggedIn = await this.userLogin.findOne({
+        where: { username },
+      });
+
+      console.log("OK log in", foundUserLoggedIn);
+      console.log("FOUND USER ", foundUser);
+
+      if (foundUserLoggedIn)
+        throw new BadRequestException("ban da dang nhap roi !");
+      else {
+        const payload: JwtPayload = {
+          user_id: foundUser.id,
+          username: username,
+          email: foundUser.email,
+          // permissions: foundUser.role.quyen,
+          user_type: foundUser.user_type,
+        };
+        console.log("payload", payload);
+        const tokens = await this.getToken(payload);
+
+        const newUserLoginSession = new PhienDangNhap();
+        newUserLoginSession.username = username;
+        newUserLoginSession.token = tokens.refreshToken;
+        const result = await this.userLogin.save(newUserLoginSession);
+
+        console.log("OK log", result);
+
+        return {
+          access_token: tokens.accessToken,
+          refresh_token: tokens.refreshToken,
+        };
+      }
     }
-
-    const nameSplit = userRecs[0].name.split(' ');
-    const givename = nameSplit[nameSplit.length - 1];
-    const payload = {
-      username: userRecs[0].name,
-      sub: userRecs[0].id,
-      user_type_id: userRecs[0].userType.id,
-      permissions: userRecs[0].userType.permissions,
-      role: userRecs[0].userType.desc,
-      email: userRecs[0].email,
-      givename: givename,
-      phone: userRecs[0].phone,
-    };
-
-    const tokens = await this.getToken(payload);
-    return {
-      access_token: tokens.accessToken,
-      refresh_token: tokens.refreshToken,
-    };
-  }
-
-  async refreshTokens(refreshToken: string) {
-    const IAT = 'iat';
-    const EXP = 'exp';
-    const payload = await this.jwtService.decode(refreshToken);
-    delete payload[IAT];
-    delete payload[EXP];
-
-    const tokens = await this.getToken(payload);
-    return {
-      access_token: tokens.accessToken,
-      refresh_token: tokens.refreshToken,
-    };
   }
 
   async getToken(payload) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
-        secret: this.configService.get('jwtAuth').access_token_secret,
-        expiresIn: this.configService.get('jwtAuth').access_token_ttl,
+        secret: this.configService.get("jwtAuth").access_token_secret,
+        expiresIn: this.configService.get("jwtAuth").access_token_ttl,
       }),
       this.jwtService.signAsync(payload, {
-        secret: this.configService.get('jwtAuth').refresh_token_secret,
-        expiresIn: this.configService.get('jwtAuth').refresh_token_ttl,
+        secret: this.configService.get("jwtAuth").refresh_token_secret,
+        expiresIn: this.configService.get("jwtAuth").refresh_token_ttl,
       }),
     ]);
 
@@ -98,11 +131,21 @@ export class AuthService {
     };
   }
 
+  async logOut(userLoggedIn): Promise<any> {
+    console.log("userloginn", userLoggedIn);
+    try {
+      await this.userLogin.delete({ username: userLoggedIn.username });
+    } catch (err) {
+      this.logger.error("Logout Error: ", err.message);
+      throw new Error(err.message);
+    }
+  }
+
   async validateAccessToken(accessToken: string): Promise<any> {
     try {
       const validate = await this.jwtService.verify(
         accessToken,
-        this.configService.get('jwtAuth').access_token_secret,
+        this.configService.get("jwtAuth").access_token_secret,
       );
       if (!validate) throw new BadRequestException();
       return { is_valid: true };
@@ -111,3 +154,15 @@ export class AuthService {
     }
   }
 }
+
+[
+  { action: "create", subject: "User" },
+  { action: "read", subject: "User" },
+  { action: "update", subject: "User" },
+  { action: "create", subject: "PhienDangNhap" },
+  { action: "delete", subject: "PhienDangNhap" },
+  { action: "read", subject: "Khoa" },
+  { action: "read", subject: "ChuyenNghanh" },
+  { action: "read", subject: "Lop" },
+  { action: "read", subject: "ThongBao" },
+];

@@ -1,136 +1,156 @@
-CREATE TABLE `PhanQuyen` (
-  `id_role` varchar(255) PRIMARY KEY,
-  `mo_ta` varchar(255),
-  `quyen` longtext
+CREATE TYPE "Gender" AS ENUM (
+  'male',
+  'female',
+  'other'
 );
 
-CREATE TABLE `PhienDangNhap` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `user_name` varchar(255),
-  `token` varchar(255),
-  `created_at` timestamp,
-  `updated_at` timestamp,
-  `deleted_at` timtimestamp
+CREATE TYPE "UserType" AS ENUM (
+  'hoc_vien',
+  'giang_vien',
+  'admin',
+  'general_user'
 );
 
-CREATE TABLE `HocVien` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `ho_ten` varchar(255),
-  `id_khoa` int,
-  `id_chuyen_nganh` int,
-  `id_info` int,
-  `diem_dau_vao` float,
-  `mon_hoc_bo_sung` varchar(255),
-  `trang_thai` varchar(255),
-  `created_at` timestamp,
-  `updated_at` timestamp,
-  `deleted_at` timtimestamp
+CREATE TYPE "Action" AS ENUM (
+  'created',
+  'read',
+  'update',
+  'deleted',
+  'manage',
+  'access_api'
 );
 
-CREATE TABLE `GiangVien` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `ho_ten` varchar(255),
-  `id_khoa` int,
-  `id_info` int,
-  `trang_thai` varchar(255),
-  `created_at` timestamp,
-  `updated_at` timestamp,
-  `deleted_at` timtimestamp
+CREATE TABLE "PhanQuyen" (
+  "id" SERIAL,
+  "role" varchar,
+  "mo_ta" varchar,
+  "quyen" json,
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp
+  PRIMARY KEY ("id", "role")
 );
 
-CREATE TABLE `Info` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `user_name` varchar(255),
-  `password` varchar(255),
-  `ngay_sinh` datetime,
-  `gioi_tinh` ENUM ('male', 'female', 'other'),
-  `dien_thoai` varchar(255),
-  `email` varchar(255),
-  `dia_chi` varchar(255)
+CREATE TABLE "PhienDangNhap" (
+  "id" SERIAL PRIMARY KEY,
+  "user_name" varchar,
+  "token" varchar,
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp
 );
 
-CREATE TABLE `MonHoc` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(255),
-  `so_tin_chi` int,
-  `ma_chuyen_nganh` int,
-  `created_at` timestamp,
-  `updated_at` timestamp,
-  `deleted_at` timtimestamp
+CREATE TABLE "User" (
+  "id" SERIAL PRIMARY KEY,
+  "username" varchar UNIQUE,
+  "password" varchar,
+  "trang_thai" varchar,
+  "user_type" "UserType",
+  "ho_ten" varchar,
+  "ngay_sinh" date,
+  "gioi_tinh" "Gender",
+  "dien_thoai" varchar,
+  "email" varchar,
+  "dia_chi" varchar,
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp
 );
 
-CREATE TABLE `Khoa` (
-  `id` varcahr PRIMARY KEY,
-  `ten_khoa` varchar(255),
-  `truong_khoa` varchar(255),
-  `dien_thoai` varchar(255),
-  `created_at` timestamp,
-  `updated_at` timestamp,
-  `deleted_at` timtimestamp
+CREATE TABLE "HocVien" (
+  "user_id" int PRIMARY KEY,
+  "id_khoa" varchar,
+  "id_chuyen_nganh" varchar,
+  "diem_dau_vao" float,
+  "mon_hoc_bo_sung" varchar,
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp
 );
 
-CREATE TABLE `ChuyenNganh` (
-  `id` varchar(255) PRIMARY KEY,
-  `ten_chuyen_nganh` varchar(255),
-  `id_khoa` int,
-  `created_at` timestamp,
-  `updated_at` timestamp,
-  `deleted_at` timtimestamp
+CREATE TABLE "HocPhan" (
+  "id" SERIAL PRIMARY KEY,
+  "name" varchar,
+  "so_tin_chi" int,
+  "ma_chuyen_nganh" varchar,
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp
 );
 
-CREATE TABLE `Class` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_mon` int,
-  `id_giang_vien` int,
-  `list_hoc_vien` longtext,
-  `created_at` timestamp,
-  `updated_at` timestamp,
-  `deleted_at` timtimestamp
+CREATE TABLE "Khoa" (
+  "id" varchar PRIMARY KEY,
+  "ten_khoa" varchar,
+  "truong_khoa" varchar,
+  "dien_thoai" varchar,
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp
 );
 
-CREATE TABLE `BangDiem` (
-  `id_hoc_vien` int,
-  `id_mon` int,
-  `diem_x` float,
-  `diem_y` float,
-  `diem_btl` float,
-  `diem_z` float,
-  `du_dieu_kien` boolean,
-  PRIMARY KEY (`id_hoc_vien`, `id_mon`)
+CREATE TABLE "ChuyenNganh" (
+  "id" varchar PRIMARY KEY,
+  "ten_chuyen_nganh" varchar,
+  "id_khoa" varchar,
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp
 );
 
-CREATE TABLE `ThongBao` (
-  `id_thong_bao` int PRIMARY KEY AUTO_INCREMENT,
-  `id_loai_thong_bao` int,
-  `tieu_de` varchar(255),
-  `noi_dung` varchar(255),
-  `file_dinh_kem` varchar(255),
-  `created_at` timestamp,
-  `updated_at` timestamp,
-  `deleted_at` timtimestamp
+CREATE TABLE "LopHocPhan" (
+  "id" SERIAL PRIMARY KEY,
+  "id_mon" int,
+  "id_giang_vien" int,
+  "list_hoc_vien" int[],
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp
 );
 
-CREATE TABLE `LoaiThongBao` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `mo_ta` varchar(255)
+CREATE TABLE "BangDiem" (
+  "id_hoc_vien" int,
+  "id_mon" int,
+  "diem_x" float,
+  "diem_y" float,
+  "diem_btl" float,
+  "diem_z" float,
+  "du_dieu_kien" boolean,
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp,
+  PRIMARY KEY ("id_hoc_vien", "id_mon")
 );
 
-ALTER TABLE `HocVien` ADD FOREIGN KEY (`id_khoa`) REFERENCES `Khoa` (`id`);
+CREATE TABLE "ThongBao" (
+  "id_thong_bao" SERIAL PRIMARY KEY,
+  "id_loai_thong_bao" int,
+  "tieu_de" varchar,
+  "noi_dung" varchar,
+  "file_dinh_kem" varchar,
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp
+);
 
-ALTER TABLE `HocVien` ADD FOREIGN KEY (`id_chuyen_nganh`) REFERENCES `ChuyenNganh` (`id`);
+CREATE TABLE "LoaiThongBao" (
+  "id" SERIAL PRIMARY KEY,
+  "mo_ta" varchar
+);
 
-ALTER TABLE `HocVien` ADD FOREIGN KEY (`id_info`) REFERENCES `Info` (`id`);
+ALTER TABLE "PhienDangNhap" ADD FOREIGN KEY ("user_name") REFERENCES "User" ("username");
 
-ALTER TABLE `GiangVien` ADD FOREIGN KEY (`id_khoa`) REFERENCES `Khoa` (`id`);
+ALTER TABLE "HocVien" ADD FOREIGN KEY ("user_id") REFERENCES "User" ("id");
 
-ALTER TABLE `GiangVien` ADD FOREIGN KEY (`id_info`) REFERENCES `Info` (`id`);
+ALTER TABLE "HocVien" ADD FOREIGN KEY ("id_khoa") REFERENCES "Khoa" ("id");
 
-ALTER TABLE `ChuyenNganh` ADD FOREIGN KEY (`id`) REFERENCES `MonHoc` (`ma_chuyen_nganh`);
+ALTER TABLE "HocVien" ADD FOREIGN KEY ("id_chuyen_nganh") REFERENCES "ChuyenNganh" ("id");
 
-ALTER TABLE `ChuyenNganh` ADD FOREIGN KEY (`id_khoa`) REFERENCES `Khoa` (`id`);
+ALTER TABLE "HocPhan" ADD FOREIGN KEY ("ma_chuyen_nganh") REFERENCES "ChuyenNganh" ("id");
 
-ALTER TABLE `Class` ADD FOREIGN KEY (`id_mon`) REFERENCES `MonHoc` (`id`);
+ALTER TABLE "ChuyenNganh" ADD FOREIGN KEY ("id_khoa") REFERENCES "Khoa" ("id");
 
-ALTER TABLE `BangDiem` ADD FOREIGN KEY (`id_hoc_vien`) REFERENCES `HocVien` (`id`);
+ALTER TABLE "LopHocPhan" ADD FOREIGN KEY ("id_mon") REFERENCES "HocPhan" ("id");
 
-ALTER TABLE `BangDiem` ADD FOREIGN KEY (`id_mon`) REFERENCES `MonHoc` (`id`);
+ALTER TABLE "BangDiem" ADD FOREIGN KEY ("id_hoc_vien") REFERENCES "HocVien" ("user_id");
+
+ALTER TABLE "BangDiem" ADD FOREIGN KEY ("id_mon") REFERENCES "HocPhan" ("id");

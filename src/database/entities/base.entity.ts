@@ -9,15 +9,15 @@ export default abstract class CustomBaseEntity extends BaseEntity {
   @CreateDateColumn({
     nullable: false,
   })
-  createdAt?: Date = new Date();
+  created_at?: Date = new Date();
 
   @UpdateDateColumn({
     nullable: false,
   })
-  updatedAt?: Date = new Date();
+  updated_at?: Date = new Date();
 
   @DeleteDateColumn({
     nullable: true,
   })
-  deletedAt?: Date;
+  deleted_at?: Date;
 }

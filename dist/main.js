@@ -17,8 +17,8 @@ async function bootstrap() {
     app.useGlobalPipes(new common_1.ValidationPipe({ transform: true }));
     app.useGlobalInterceptors(new transform_response_interceptor_1.TransformResponseInterceptor());
     const config = new swagger_1.DocumentBuilder()
-        .setTitle('Mirabo eco API')
-        .setDescription('Mirabo eco API description')
+        .setTitle('VMU API')
+        .setDescription('VMU API description')
         .setVersion('1.0')
         .addBearerAuth()
         .build();

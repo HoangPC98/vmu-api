@@ -9,24 +9,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CaslAbilityFactory = void 0;
 const ability_1 = require("@casl/ability");
 const common_1 = require("@nestjs/common");
+const hoc_vien_entity_1 = require("../database/entities/hoc_vien.entity");
+const hoc_phan_entity_1 = require("../database/entities/hoc_phan.entity");
+const chuyen_nganh_entity_1 = require("../database/entities/chuyen_nganh.entity");
+const lop_entity_1 = require("../database/entities/lop.entity");
+const khoa_entity_1 = require("../database/entities/khoa.entity");
+const phan_quyen_entity_1 = require("../database/entities/phan_quyen.entity");
+const bang_diem_entity_1 = require("../database/entities/bang_diem.entity");
+const thong_bao_entity_1 = require("../database/entities/thong_bao.entity");
 const user_entity_1 = require("../database/entities/user.entity");
-const offwork_entity_1 = require("../database/entities/offwork.entity");
-const review_entity_1 = require("../database/entities/review.entity");
-const usertype_entity_1 = require("../database/entities/usertype.entity");
-const worktype_entity_1 = require("../database/entities/worktype.entity");
-const worktime_entity_1 = require("../database/entities/worktime.entity");
 const Subjects = [
+    hoc_phan_entity_1.HocPhan.name,
+    chuyen_nganh_entity_1.ChuyenNganh.name,
+    khoa_entity_1.Khoa.name,
+    lop_entity_1.Lop.name,
+    phan_quyen_entity_1.PhanQuyen.name,
+    bang_diem_entity_1.BangDiem.name,
+    thong_bao_entity_1.ThongBao.name,
     user_entity_1.User.name,
-    offwork_entity_1.Offwork.name,
-    review_entity_1.Review.name,
-    usertype_entity_1.UserType.name,
-    worktime_entity_1.WorkTime.name,
-    worktype_entity_1.WorkType.name,
+    hoc_vien_entity_1.HocVien.name,
     'all',
 ];
 let CaslAbilityFactory = class CaslAbilityFactory {
     createForUser(user) {
-        const permissions = JSON.parse(user.permissions);
+        const permissions = JSON.parse("['ad', 'bc']");
         return new ability_1.Ability(permissions);
     }
 };

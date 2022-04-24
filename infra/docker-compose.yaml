@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3'
 services:
   vmu-api:
     container_name: vmu-api
@@ -13,7 +13,8 @@ services:
       - '127.0.0.1:3003:3000'
     depends_on:
       - vmu-db
-    restart: always
+    # networks:
+    #   - postgres
     logging:
       driver: 'json-file'
       options:
@@ -21,19 +22,32 @@ services:
         max-size: '10m'
 
   vmu-db:
+    image: postgres:latest
     container_name: vmu-db
     build:
-      context: ./mysql
-    environment:
-      MYSQL_HOST: '0.0.0.0'
-      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-      MYSQL_DATABASE: vmu
-      MYSQL_USER: vmu
-      MYSQL_PASSWORD: vmu
+      context: ./sql
+      dockerfile: Dockerfile
+    env_file:
+      - ../docker.env
     ports:
-      - '127.0.0.1:3307:3306'
+      - '127.0.0.1:5432:5432'
     logging:
       driver: 'json-file'
       options:
         max-file: '5'
         max-size: '10m'
+    # networks:
+    #   - postgres
+
+  pg-admin:
+    image: dpage/pgadmin4
+    container_name: pg-admin
+    env_file:
+      - ../docker.env
+    ports:
+      - '8080:80'
+    # networks:
+    #   - postgres
+networks:
+  postgres:
+    driver: bridge

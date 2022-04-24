@@ -9,7 +9,7 @@ import CustomBaseEntity from './base.entity';
 import { HocVien } from './hoc_vien.entity';
 import { HocPhan } from './hoc_phan.entity';
 
-@Entity('bang_diem')
+@Entity('BangDiem')
 export class BangDiem extends CustomBaseEntity {
   @PrimaryColumn()
   id_hoc_vien: string;

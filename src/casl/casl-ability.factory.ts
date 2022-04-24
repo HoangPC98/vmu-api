@@ -8,22 +8,28 @@ import {
   RawRuleOf,
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
-import { User } from '../database/entities/hoc_vien.entity';
-import { Offwork } from '../database/entities/user_info.entity';
-import { Review } from '../database/entities/review.entity';
-import { UserType } from '../database/entities/usertype.entity';
-import { WorkType } from '../database/entities/worktype.entity';
-import { WorkTime } from '../database/entities/worktime.entity';
-import { AuthUser } from '../auth/AuthUser';
+import { HocVien } from '../database/entities/hoc_vien.entity';
+import { HocPhan } from '../database/entities/hoc_phan.entity';
+import { ChuyenNganh } from '../database/entities/chuyen_nganh.entity';
+import { Lop } from '../database/entities/lop.entity';
+import { Khoa } from '../database/entities/khoa.entity';
+import { PhanQuyen } from '../database/entities/phan_quyen.entity';
+import { BangDiem } from '../database/entities/bang_diem.entity';
+import { ThongBao } from '../database/entities/thong_bao.entity';
+import { JwtPayload } from '../auth/JwtPayload';
 import { Action } from './Action';
+import { User } from '../database/entities/user.entity';
 
 const Subjects = [
+  HocPhan.name,
+  ChuyenNganh.name,
+  Khoa.name,
+  Lop.name,
+  PhanQuyen.name,
+  BangDiem.name,
+  ThongBao.name,
   User.name,
-  Offwork.name,
-  Review.name,
-  UserType.name,
-  WorkTime.name,
-  WorkType.name,
+  HocVien.name,
   'all',
 ] as const;
 type AppAbilities = [
@@ -37,8 +43,8 @@ export type AppAbility = Ability<AppAbilities>;
 
 @Injectable()
 export class CaslAbilityFactory {
-  createForUser(user: AuthUser) {
-    const permissions = JSON.parse(user.permissions);
+  createForUser(user: JwtPayload) {
+    const permissions = JSON.parse("['ad', 'bc']");
     return new Ability<AppAbilities>(<RawRuleOf<AppAbility>[]>permissions);
   }
 }

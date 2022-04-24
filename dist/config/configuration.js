@@ -1,26 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = () => ({
+    env: process.env.NODE_ENV || 'development',
     port: parseInt(process.env.PORT, 10) || 3000,
     database: {
-        type: 'mysql',
-        username: process.env.DATABASE_USERNAME || 'eco',
-        password: process.env.DATABASE_PASSWORD || 'eco',
-        database: process.env.DATABASE_NAME || 'eco',
-        host: process.env.DATABASE_HOST || 'localhost',
-        port: parseInt(process.env.DATABASE_PORT, 10) || 3306,
-        logging: process.env.DATABASE_LOGGING ? true : false,
-    },
-    googleAuth: {
-        authorizedDomain: process.env.GOOGLE_AUTHORIZED_DOMAIN || 'mirabo.com.vn',
-        clientId: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRECT,
+        type: 'postgres',
+        username: process.env.POSTGRES_USER || 'vmu_user',
+        password: process.env.POSTGRES_PASSWORD || 'vmu_pass',
+        database: process.env.POSTGRES_NAME || 'vmu_db',
+        host: process.env.POSTGRES_HOST || 'localhost',
+        port: parseInt(process.env.POSTGRES_PORT, 10) || 5432,
+        logging: process.env.DB_LOGGING ? true : false,
     },
     jwtAuth: {
         access_token_ttl: process.env.JWT_ACCESS_TOKEN_TTL || '15m',
-        access_token_secret: process.env.JWT_ACCESS_TOKEN_SECRECT,
+        jwt_token_secret: process.env.JWT_TOKEN_SECRET || 'vmu_secret',
         refresh_token_ttl: process.env.JWT_REFRESH_TOKEN_TTL || '7d',
-        refresh_token_secret: process.env.JWT_REFRESH_TOKEN_SECRET,
     },
 });
 //# sourceMappingURL=configuration.js.map

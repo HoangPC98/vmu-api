@@ -19,17 +19,16 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: configService.get('jwtAuth').access_token_secret,
+            secretOrKey: configService.get('jwtAuth').jwt_token_secret,
         });
         this.configService = configService;
     }
     async validate(payload) {
         return {
-            id: payload.sub,
+            user_id: payload.user_id,
             username: payload.username,
-            password: payload.password,
-            user_type_id: payload.user_type_id,
-            permissions: payload.permissions,
+            user_type: payload.user_type,
+            email: payload.email,
         };
     }
 };

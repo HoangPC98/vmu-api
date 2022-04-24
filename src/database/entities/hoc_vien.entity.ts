@@ -4,25 +4,40 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  OneToOne,
+  PrimaryColumn,
 } from 'typeorm';
 import CustomBaseEntity from './base.entity';
-import { UserType } from './usertype.entity';
+import { ChuyenNganh } from './chuyen_nganh.entity';
+import { Khoa } from './khoa.entity';
+import { User } from './user.entity';
 
-@Entity('users')
-export class User extends CustomBaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+@Entity('HocVien')
+export class HocVien extends CustomBaseEntity {
+  @PrimaryColumn()
+  user_id: number;
 
-  @Column({nullable: false})
+  @OneToOne(() => User, (user) => user.id)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+
+  @Column({ nullable: false })
   id_khoa: string;
 
-  @Column({nullable: false})
+
+  @ManyToOne(() => Khoa)
+  @JoinColumn({ name: 'id_khoa' })
+  khoa: Khoa;
+
+  @Column({ nullable: false })
   id_chuyen_nganh: string;
 
-  @Column({nullable: false})
-  id_info: string;
+  @ManyToOne(() => ChuyenNganh)
+  @JoinColumn({ name: 'id_chuyen_nghanh' })
+  chuyenNganh: ChuyenNganh;
 
-  @Column({nullable: false})
+
+  @Column({ nullable: false })
   ho_ten: string;
 
   @Column()
@@ -30,7 +45,5 @@ export class User extends CustomBaseEntity {
 
   @Column()
   trang_thai: string;
-
-  @Column()
-  quyen: string[];
+  
 }

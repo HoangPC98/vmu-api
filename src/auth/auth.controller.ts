@@ -1,10 +1,13 @@
-import { Controller, Post, Body, HttpCode } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Post, Body, HttpCode, Get } from '@nestjs/common';
+import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
+import { GetCurrentUserLogin } from './decorators/getCurrentUser.auth';
 import { Public } from './decorators/public.auth';
-import { GoogleAuthDto } from './dto/googleAuth.dto';
+import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refreshToken.dto';
+import { SignUpDto } from './dto/signUp.dto';
 import { AccessTokenDto } from './dto/verifyAtoken.dto';
+import { JwtPayload } from './JwtPayload';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -12,34 +15,42 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Public()
-  @ApiResponse({
-    status: 200,
-    description: 'return access token and refresh token',
-  })
-  @Post('googles')
-  async loginGoogle(@Body() googleAuthDto: GoogleAuthDto): Promise<any> {
-    const token = await this.authService.loginGoogle(googleAuthDto.googleToken);
-    return {
-      result: token,
-    };
+  @Post('sign-up')
+  async signUp(@Body() signUpBody: SignUpDto): Promise<any> {
+    return await this.authService.signUp(signUpBody);
   }
 
   @Public()
   @ApiResponse({
-    status: 201,
+    status: 200,
     description: 'return access token and refresh token',
   })
-  @Post('refresh')
-  async refreshTokens(@Body() refreshTokenDto: RefreshTokenDto): Promise<any> {
-    const token = await this.authService.refreshTokens(
-      refreshTokenDto.refreshToken,
+  @Post('login')
+  async login(@Body() loginDto: LoginDto): Promise<any> {
+    const token = await this.authService.login(
+      loginDto.username,
+      loginDto.password,
     );
     return {
       result: token,
     };
   }
 
-  @Public()
+  // @Public()
+  // @ApiResponse({
+  //   status: 201,
+  //   description: 'return access token and refresh token',
+  // })
+  // @Post('refresh')
+  // async refreshTokens(@Body() refreshTokenDto: RefreshTokenDto): Promise<any> {
+  //   const token = await this.authService.refreshTokens(
+  //     refreshTokenDto.refreshToken,
+  //   );
+  //   return {
+  //     result: token,
+  //   };
+  // }
+
   @ApiResponse({
     status: 200,
     description: 'verify if logged in',
@@ -53,6 +64,15 @@ export class AuthController {
     );
     return {
       result: validate_token,
+    };
+  }
+
+  @ApiOkResponse({ description: 'logout success' })
+  @Get('logout')
+  async logOut(@GetCurrentUserLogin() userLoggedin: JwtPayload): Promise<any> {
+    await this.authService.logOut(userLoggedin);
+    return {
+      message: 'logout success',
     };
   }
 }

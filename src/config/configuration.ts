@@ -1,18 +1,18 @@
 export default () => ({
+  env: process.env.NODE_ENV || 'development',
   port: parseInt(process.env.PORT, 10) || 3000,
   database: {
-    type: 'mysql',
-    username: process.env.DB_USER || 'vmu',
-    password: process.env.DB_PASSWORD || 'vmu',
-    database: process.env.DB_NAME || 'vmu',
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT, 10) || 3306,
+    type: 'postgres',
+    username: process.env.POSTGRES_USER || 'vmu_user',
+    password: process.env.POSTGRES_PASSWORD || 'vmu_pass',
+    database: process.env.POSTGRES_NAME || 'vmu_db',
+    host: process.env.POSTGRES_HOST || 'localhost',
+    port: parseInt(process.env.POSTGRES_PORT, 10) || 5432,
     logging: process.env.DB_LOGGING ? true : false,
   },
   jwtAuth: {
     access_token_ttl: process.env.JWT_ACCESS_TOKEN_TTL || '15m',
-    access_token_secret: process.env.JWT_ACCESS_TOKEN_SECRECT,
+    jwt_token_secret: process.env.JWT_TOKEN_SECRET || 'vmu_secret',
     refresh_token_ttl: process.env.JWT_REFRESH_TOKEN_TTL || '7d',
-    refresh_token_secret: process.env.JWT_REFRESH_TOKEN_SECRET,
   },
 });

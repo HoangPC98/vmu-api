@@ -5,24 +5,27 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import CustomBaseEntity from './base.entity';
-import { User } from './hoc_vien.entity';
+import { ChuyenNganh } from './chuyen_nganh.entity';
 
-@Entity('user_types')
-export class UserType extends CustomBaseEntity {
+@Entity('HocPhan')
+export class HocPhan extends CustomBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  desc: string;
-
-  @OneToMany(() => User, (user) => user.userType, {
-    cascade: true,
-    onDelete: 'CASCADE',
-  })
-  users: User[];
+  name: string;
 
   @Column()
-  permissions: string;
+  so_tin_chi: number;
+
+  @Column()
+  id_chuyen_nganh: string;
+
+  @ManyToOne(() => ChuyenNganh, (chuyenNganh) => chuyenNganh.id)
+  @JoinColumn({ name: 'id_chuyen_nganh' })
+  chuyenNganh: ChuyenNganh;
 }
