@@ -154,15 +154,3 @@ export class AuthService {
     }
   }
 }
-
-[
-  { action: "create", subject: "User" },
-  { action: "read", subject: "User" },
-  { action: "update", subject: "User" },
-  { action: "create", subject: "PhienDangNhap" },
-  { action: "delete", subject: "PhienDangNhap" },
-  { action: "read", subject: "Khoa" },
-  { action: "read", subject: "ChuyenNghanh" },
-  { action: "read", subject: "Lop" },
-  { action: "read", subject: "ThongBao" },
-];
