@@ -17,7 +17,7 @@ import { PhienDangNhap } from 'src/database/entities/phien_dang_nhap.entity';
 
     PassportModule,
     JwtModule.registerAsync({
-      // imports: [ConfigModule],
+      imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get('jwtAuth').jwt_token_secret,

@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import CustomBaseEntity from './base.entity';
 
-@Entity('thong_bao')
+@Entity('ThongBao')
 export class ThongBao extends CustomBaseEntity {
   @PrimaryGeneratedColumn()
   id: string;

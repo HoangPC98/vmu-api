@@ -140,15 +140,4 @@ AuthService = AuthService_1 = __decorate([
         jwt_1.JwtService])
 ], AuthService);
 exports.AuthService = AuthService;
-[
-    { action: "create", subject: "User" },
-    { action: "read", subject: "User" },
-    { action: "update", subject: "User" },
-    { action: "create", subject: "PhienDangNhap" },
-    { action: "delete", subject: "PhienDangNhap" },
-    { action: "read", subject: "Khoa" },
-    { action: "read", subject: "ChuyenNghanh" },
-    { action: "read", subject: "Lop" },
-    { action: "read", subject: "ThongBao" },
-];
 //# sourceMappingURL=auth.service.js.map

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.1'
 services:
   vmu-api:
     container_name: vmu-api
