@@ -12,17 +12,17 @@ import { HocPhan } from './hoc_phan.entity';
 @Entity('BangDiem')
 export class BangDiem extends CustomBaseEntity {
   @PrimaryColumn()
-  id_hoc_vien: string;
+  id_hoc_vien: number;
 
-  @ManyToOne(() => HocVien)
+  @ManyToOne(() => HocVien, {onDelete: 'CASCADE'})
   @JoinColumn({ name: 'id_hoc_vien' })
   hocVien: HocVien;
 
   @PrimaryColumn()
-  id_hoc_phan: string;
+  id_mon: number;
 
-  @ManyToOne(() => HocVien)
-  @JoinColumn({ name: 'id_hoc_vien' })
+  @ManyToOne(() => HocPhan)
+  @JoinColumn({ name: 'id_mon' })
   hocPhan: HocPhan;
 
   @Column()
@@ -31,12 +31,4 @@ export class BangDiem extends CustomBaseEntity {
   @Column()
   diem_y: number;
 
-  @Column()
-  diem_btl: number;
-
-  @Column()
-  diem_z: number;
-
-  @Column()
-  du_dieu_kien: boolean;
 }

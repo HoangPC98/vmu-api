@@ -41,7 +41,7 @@ export class PhanQuyen extends CustomBaseEntity {
   @Column('json', { array: true })
   quyen: JSON;
 
-  // @OneToMany(()=> User, (user: User) => user.role)
-  // @JoinColumn({name: 'role'})
-  // user: User[];
+  @OneToMany(()=> User, (user: User) => user.user_type)
+  @JoinColumn({name: 'user_type'})
+  user: User[];
 }

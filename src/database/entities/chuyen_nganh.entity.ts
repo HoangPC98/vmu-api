@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 import CustomBaseEntity from './base.entity';
 import { Khoa } from './khoa.entity';
 
-@Entity('ChuyenNghanh')
+@Entity('ChuyenNganh')
 export class ChuyenNganh extends CustomBaseEntity {
   @PrimaryColumn()
   id: string;

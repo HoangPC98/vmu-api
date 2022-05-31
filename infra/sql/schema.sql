@@ -4,11 +4,38 @@ CREATE TYPE "Gender" AS ENUM (
   'other'
 );
 
+CREATE TYPE "TrangThaiHoc" AS ENUM (
+  'dang_hoc'
+  'da_dang_ki',
+  'da_hoan_thanh',
+  'da_huy'
+);
+
+CREATE TYPE "TrangThaiHocVien" AS ENUM (
+  'dang_hoc'
+  'da_thoi_hoc',
+  'da_tot_nghiep',
+  'bao_luu'
+);
+
+CREATE TYPE "TrinhDo" AS ENUM (
+  'đại học',
+  'thạc sĩ',
+  'tiến sĩ',
+  'giáo sư'
+);
 CREATE TYPE "UserType" AS ENUM (
   'hoc_vien',
   'giang_vien',
   'admin',
   'general_user'
+);
+
+CREATE TYPE "TrinhDo" AS ENUM (
+  'dai_hoc',
+  'thac_si',
+  'tien_si',
+  'giao_su'
 );
 
 CREATE TYPE "Action" AS ENUM (
@@ -28,7 +55,17 @@ CREATE TABLE "PhanQuyen" (
   "created_at" timestamp,
   "updated_at" timestamp,
   "deleted_at" timestamp
-  PRIMARY KEY ("id", "role")
+  constraint "pk_phan_quyen" PRIMARY KEY ("id", "role")
+);
+
+CREATE TABLE "PhongHoc" (
+  "id_phong" varchar primary key,
+  "suc_chua" int,
+  "tinh_trang" varchar,
+  "note" varchar,
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp
 );
 
 CREATE TABLE "PhienDangNhap" (
@@ -62,7 +99,15 @@ CREATE TABLE "HocVien" (
   "id_khoa" varchar,
   "id_chuyen_nganh" varchar,
   "diem_dau_vao" float,
-  "mon_hoc_bo_sung" varchar,
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp
+);
+
+CREATE TABLE "GiangVien" (
+  "user_id" int PRIMARY KEY,
+  "id_khoa" varchar,
+  "trinh_do" "TrinhDo",
   "created_at" timestamp,
   "updated_at" timestamp,
   "deleted_at" timestamp
@@ -76,6 +121,7 @@ CREATE TABLE "HocPhan" (
   "created_at" timestamp,
   "updated_at" timestamp,
   "deleted_at" timestamp
+
 );
 
 CREATE TABLE "Khoa" (
@@ -106,6 +152,16 @@ CREATE TABLE "LopHocPhan" (
   "updated_at" timestamp,
   "deleted_at" timestamp
 );
+
+CREATE TABLE "PhanLop" (
+  "id_lop_hoc_phan" int,
+  "id_hoc_vien" int,
+  "status" "TrangThaiHoc",
+  "created_at" timestamp,
+  "updated_at" timestamp,
+  "deleted_at" timestamp,
+   constraint "pk_phan_lop" PRIMARY KEY ("id_hoc_vien", "id_lop_hoc_phan")
+)
 
 CREATE TABLE "BangDiem" (
   "id_hoc_vien" int,
@@ -145,7 +201,7 @@ ALTER TABLE "HocVien" ADD FOREIGN KEY ("id_khoa") REFERENCES "Khoa" ("id");
 
 ALTER TABLE "HocVien" ADD FOREIGN KEY ("id_chuyen_nganh") REFERENCES "ChuyenNganh" ("id");
 
-ALTER TABLE "HocPhan" ADD FOREIGN KEY ("ma_chuyen_nganh") REFERENCES "ChuyenNganh" ("id");
+ALTER TABLE "HocPhan" ADD CONSTRAINT "fk_id_chuyen_nganh_of_hoc_phan" FOREIGN KEY ("id_chuyen_nganh") REFERENCES "ChuyenNganh" ("id");
 
 ALTER TABLE "ChuyenNganh" ADD FOREIGN KEY ("id_khoa") REFERENCES "Khoa" ("id");
 
@@ -154,3 +210,15 @@ ALTER TABLE "LopHocPhan" ADD FOREIGN KEY ("id_mon") REFERENCES "HocPhan" ("id");
 ALTER TABLE "BangDiem" ADD FOREIGN KEY ("id_hoc_vien") REFERENCES "HocVien" ("user_id");
 
 ALTER TABLE "BangDiem" ADD FOREIGN KEY ("id_mon") REFERENCES "HocPhan" ("id");
+
+ALTER TABLE "ThongBao" ADD FOREIGN KEY ("id_loai_thong_bao") REFERENCES "LoaiThongBao" ("id");
+
+ALTER TABLE "LopHocPhan" ADD FOREIGN KEY ("id_phong_hoc") REFERENCES "PhongHoc" ("id_phong");
+
+ALTER TABLE "PhanLop" ADD FOREIGN KEY ("id_hoc_vien") REFERENCES "HocVien" ("user_id");
+
+ALTER TABLE "PhanLop" ADD FOREIGN KEY ("id_lop_hoc_phan") REFERENCES "LopHocPhan" ("id");
+
+ALTER TABLE "GiangVien" ADD FOREIGN KEY ("user_id") REFERENCES "User" ("id")
+
+ 

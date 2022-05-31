@@ -20,12 +20,16 @@ class CustomBaseEntity extends typeorm_1.BaseEntity {
 __decorate([
     (0, typeorm_1.CreateDateColumn)({
         nullable: false,
+        precision: 6,
+        default: new Date(),
     }),
     __metadata("design:type", Date)
 ], CustomBaseEntity.prototype, "created_at", void 0);
 __decorate([
     (0, typeorm_1.UpdateDateColumn)({
         nullable: false,
+        precision: 6,
+        default: new Date(),
     }),
     __metadata("design:type", Date)
 ], CustomBaseEntity.prototype, "updated_at", void 0);

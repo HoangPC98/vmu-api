@@ -8,11 +8,15 @@ import {
 export default abstract class CustomBaseEntity extends BaseEntity {
   @CreateDateColumn({
     nullable: false,
+    precision: 6,
+    default: new Date(),
   })
   created_at?: Date = new Date();
 
   @UpdateDateColumn({
     nullable: false,
+    precision: 6,
+    default: new Date(),
   })
   updated_at?: Date = new Date();
 

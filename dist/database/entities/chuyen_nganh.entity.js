@@ -33,7 +33,7 @@ __decorate([
     __metadata("design:type", String)
 ], ChuyenNganh.prototype, "ten_chuyen_nganh", void 0);
 ChuyenNganh = __decorate([
-    (0, typeorm_1.Entity)('ChuyenNghanh')
+    (0, typeorm_1.Entity)('ChuyenNganh')
 ], ChuyenNganh);
 exports.ChuyenNganh = ChuyenNganh;
 //# sourceMappingURL=chuyen_nganh.entity.js.map

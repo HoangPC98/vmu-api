@@ -43,8 +43,8 @@ __decorate([
     __metadata("design:type", Object)
 ], PhanQuyen.prototype, "quyen", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => user_entity_1.User, (user) => user.role),
-    (0, typeorm_1.JoinColumn)({ name: 'role' }),
+    (0, typeorm_1.OneToMany)(() => user_entity_1.User, (user) => user.user_type),
+    (0, typeorm_1.JoinColumn)({ name: 'user_type' }),
     __metadata("design:type", Array)
 ], PhanQuyen.prototype, "user", void 0);
 PhanQuyen = __decorate([

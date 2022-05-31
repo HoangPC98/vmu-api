@@ -16,9 +16,9 @@ const hoc_vien_entity_1 = require("./hoc_vien.entity");
 const phan_quyen_entity_1 = require("./phan_quyen.entity");
 var GioiTinh;
 (function (GioiTinh) {
-    GioiTinh["NAME"] = "nam";
-    GioiTinh["NU"] = "nu";
-    GioiTinh["KHAC"] = "khac";
+    GioiTinh["NAM"] = "male";
+    GioiTinh["NU"] = "female";
+    GioiTinh["KHAC"] = "other";
 })(GioiTinh = exports.GioiTinh || (exports.GioiTinh = {}));
 let User = class User extends base_entity_1.default {
 };
@@ -31,7 +31,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "user_type", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => phan_quyen_entity_1.PhanQuyen, (phanQuyen) => phanQuyen.quyen),
+    (0, typeorm_1.ManyToOne)(() => phan_quyen_entity_1.PhanQuyen),
     (0, typeorm_1.JoinColumn)({ name: 'user_type' }),
     __metadata("design:type", phan_quyen_entity_1.PhanQuyen)
 ], User.prototype, "role", void 0);
@@ -54,7 +54,7 @@ __decorate([
 ], User.prototype, "ho_ten", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Date)
+    __metadata("design:type", String)
 ], User.prototype, "ngay_sinh", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: false }),

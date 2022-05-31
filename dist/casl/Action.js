@@ -8,5 +8,6 @@ var Action;
     Action["Read"] = "read";
     Action["Update"] = "update";
     Action["Delete"] = "delete";
+    Action["Access"] = "access";
 })(Action = exports.Action || (exports.Action = {}));
 //# sourceMappingURL=Action.js.map

@@ -18,14 +18,16 @@ const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
 const user_entity_1 = require("../database/entities/user.entity");
 const phien_dang_nhap_entity_1 = require("../database/entities/phien_dang_nhap.entity");
+const phan_quyen_entity_1 = require("../database/entities/phan_quyen.entity");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([hoc_vien_entity_1.HocVien, user_entity_1.User, phien_dang_nhap_entity_1.PhienDangNhap]),
+            typeorm_1.TypeOrmModule.forFeature([hoc_vien_entity_1.HocVien, user_entity_1.User, phien_dang_nhap_entity_1.PhienDangNhap, phan_quyen_entity_1.PhanQuyen]),
             passport_1.PassportModule,
             jwt_1.JwtModule.registerAsync({
+                imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],
                 useFactory: (configService) => ({
                     secret: configService.get('jwtAuth').jwt_token_secret,

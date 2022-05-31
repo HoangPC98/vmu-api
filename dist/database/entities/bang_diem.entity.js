@@ -18,20 +18,20 @@ let BangDiem = class BangDiem extends base_entity_1.default {
 };
 __decorate([
     (0, typeorm_1.PrimaryColumn)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], BangDiem.prototype, "id_hoc_vien", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => hoc_vien_entity_1.HocVien),
+    (0, typeorm_1.ManyToOne)(() => hoc_vien_entity_1.HocVien, { onDelete: 'CASCADE' }),
     (0, typeorm_1.JoinColumn)({ name: 'id_hoc_vien' }),
     __metadata("design:type", hoc_vien_entity_1.HocVien)
 ], BangDiem.prototype, "hocVien", void 0);
 __decorate([
     (0, typeorm_1.PrimaryColumn)(),
-    __metadata("design:type", String)
-], BangDiem.prototype, "id_hoc_phan", void 0);
+    __metadata("design:type", Number)
+], BangDiem.prototype, "id_mon", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => hoc_vien_entity_1.HocVien),
-    (0, typeorm_1.JoinColumn)({ name: 'id_hoc_vien' }),
+    (0, typeorm_1.ManyToOne)(() => hoc_phan_entity_1.HocPhan),
+    (0, typeorm_1.JoinColumn)({ name: 'id_mon' }),
     __metadata("design:type", hoc_phan_entity_1.HocPhan)
 ], BangDiem.prototype, "hocPhan", void 0);
 __decorate([
@@ -42,18 +42,6 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], BangDiem.prototype, "diem_y", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], BangDiem.prototype, "diem_btl", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], BangDiem.prototype, "diem_z", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
-], BangDiem.prototype, "du_dieu_kien", void 0);
 BangDiem = __decorate([
     (0, typeorm_1.Entity)('BangDiem')
 ], BangDiem);

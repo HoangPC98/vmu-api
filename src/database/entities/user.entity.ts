@@ -1,3 +1,4 @@
+
 import {
   Entity,
   Column,
@@ -12,9 +13,9 @@ import { Khoa } from './khoa.entity';
 import { PhanQuyen, Role } from './phan_quyen.entity';
 
 export enum GioiTinh {
-  NAME = 'nam',
-  NU = 'nu',
-  KHAC = 'khac'
+  NAM = 'male',
+  NU = 'female',
+  KHAC = 'other',
 }
 
 @Entity('User')
@@ -25,14 +26,13 @@ export class User extends CustomBaseEntity {
   @Column()
   user_type: Role;
 
-  @ManyToOne(()=> PhanQuyen, (phanQuyen) => phanQuyen.quyen)
-  @JoinColumn({name: 'user_type'})
+  @ManyToOne(() => PhanQuyen)
+  @JoinColumn({ name: 'user_type' })
   role: PhanQuyen;
 
-  @OneToOne(() => HocVien, (hocVien: HocVien) =>hocVien.user_id)
+  @OneToOne(() => HocVien, (hocVien: HocVien) => hocVien.user_id)
   @JoinColumn({ name: 'id' })
   hocVien: HocVien;
-
 
   @Column({ nullable: false })
   username: string;
@@ -44,7 +44,7 @@ export class User extends CustomBaseEntity {
   ho_ten: string;
 
   @Column()
-  ngay_sinh: Date;
+  ngay_sinh: string;
 
   @Column({ nullable: false })
   gioi_tinh: GioiTinh;

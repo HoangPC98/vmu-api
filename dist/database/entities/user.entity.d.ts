@@ -2,9 +2,9 @@ import CustomBaseEntity from './base.entity';
 import { HocVien } from './hoc_vien.entity';
 import { PhanQuyen, Role } from './phan_quyen.entity';
 export declare enum GioiTinh {
-    NAME = "nam",
-    NU = "nu",
-    KHAC = "khac"
+    NAM = "male",
+    NU = "female",
+    KHAC = "other"
 }
 export declare class User extends CustomBaseEntity {
     id: number;
@@ -14,7 +14,7 @@ export declare class User extends CustomBaseEntity {
     username: string;
     password: string;
     ho_ten: string;
-    ngay_sinh: Date;
+    ngay_sinh: string;
     gioi_tinh: GioiTinh;
     dien_thoai: string;
     email: string;

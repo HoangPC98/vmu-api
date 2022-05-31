@@ -21,32 +21,35 @@ const config_1 = require("@nestjs/config");
 const jwt_1 = require("@nestjs/jwt");
 const phien_dang_nhap_entity_1 = require("../database/entities/phien_dang_nhap.entity");
 const user_entity_1 = require("../database/entities/user.entity");
+const phan_quyen_entity_1 = require("../database/entities/phan_quyen.entity");
+const enum_types_1 = require("../dataTypes/enum.types");
 let AuthService = AuthService_1 = class AuthService {
-    constructor(configService, userRepository, userLogin, jwtService) {
+    constructor(configService, userRepository, userLogin, phanQuyenRepo, jwtService) {
         this.configService = configService;
         this.userRepository = userRepository;
         this.userLogin = userLogin;
+        this.phanQuyenRepo = phanQuyenRepo;
         this.jwtService = jwtService;
         this.logger = new common_1.Logger(AuthService_1.name);
     }
     async signUp(signUpDto) {
-        console.log("OKOOKOKO");
+        console.log('OKOOKOKO');
         const foundUser = await this.userRepository.findOne({
             where: { username: signUpDto.username, email: signUpDto.email },
         });
-        console.log("foundUser", foundUser);
+        console.log('foundUser', foundUser);
         if (foundUser)
-            throw new common_1.BadRequestException("this user name or email exist, please try again");
+            throw new common_1.BadRequestException('this user name or email exist, please try again');
         try {
             let newUser = new user_entity_1.User();
             newUser.username = signUpDto.username;
             newUser.email = signUpDto.email;
             newUser.password = signUpDto.password;
-            newUser.user_type = signUpDto.user_type;
-            console.log("new user created", newUser);
+            newUser.user_type = signUpDto.user_type || enum_types_1.Role.GeneralUser;
+            console.log('new user created', newUser);
             const result = await this.userRepository.save(newUser);
             return {
-                message: "ok",
+                message: 'ok',
                 result: result,
             };
         }
@@ -56,35 +59,40 @@ let AuthService = AuthService_1 = class AuthService {
         }
     }
     async login(username, password) {
-        const FUNC_NAME = "login";
+        const FUNC_NAME = 'login';
         const foundUser = await this.userRepository.findOne({
             where: { username: username, password: password },
         });
-        console.log("foun", foundUser);
+        console.log('foun', foundUser);
         if (!foundUser)
-            throw new common_1.BadRequestException("wrong username of password");
+            throw new common_1.BadRequestException('wrong username of password');
         else {
             const foundUserLoggedIn = await this.userLogin.findOne({
                 where: { username },
             });
-            console.log("OK log in", foundUserLoggedIn);
-            console.log("FOUND USER ", foundUser);
+            console.log('OK log in', foundUserLoggedIn);
+            console.log('FOUND USER ', foundUser);
             if (foundUserLoggedIn)
-                throw new common_1.BadRequestException("ban da dang nhap roi !");
+                throw new common_1.BadRequestException('ban da dang nhap roi !');
             else {
+                const getPhanQuyen = await this.phanQuyenRepo.findOne({
+                    role: foundUser.user_type,
+                });
+                console.log('getPhanQuyen', getPhanQuyen);
                 const payload = {
                     user_id: foundUser.id,
                     username: username,
                     email: foundUser.email,
+                    permissions: getPhanQuyen.quyen,
                     user_type: foundUser.user_type,
                 };
-                console.log("payload", payload);
+                console.log('payload', payload);
                 const tokens = await this.getToken(payload);
                 const newUserLoginSession = new phien_dang_nhap_entity_1.PhienDangNhap();
                 newUserLoginSession.username = username;
                 newUserLoginSession.token = tokens.refreshToken;
                 const result = await this.userLogin.save(newUserLoginSession);
-                console.log("OK log", result);
+                console.log('OK log', result);
                 return {
                     access_token: tokens.accessToken,
                     refresh_token: tokens.refreshToken,
@@ -95,12 +103,12 @@ let AuthService = AuthService_1 = class AuthService {
     async getToken(payload) {
         const [accessToken, refreshToken] = await Promise.all([
             this.jwtService.signAsync(payload, {
-                secret: this.configService.get("jwtAuth").access_token_secret,
-                expiresIn: this.configService.get("jwtAuth").access_token_ttl,
+                secret: this.configService.get('jwtAuth').access_token_secret,
+                expiresIn: this.configService.get('jwtAuth').access_token_ttl,
             }),
             this.jwtService.signAsync(payload, {
-                secret: this.configService.get("jwtAuth").refresh_token_secret,
-                expiresIn: this.configService.get("jwtAuth").refresh_token_ttl,
+                secret: this.configService.get('jwtAuth').refresh_token_secret,
+                expiresIn: this.configService.get('jwtAuth').refresh_token_ttl,
             }),
         ]);
         return {
@@ -108,19 +116,20 @@ let AuthService = AuthService_1 = class AuthService {
             refreshToken,
         };
     }
+    async getPayLoad() { }
     async logOut(userLoggedIn) {
-        console.log("userloginn", userLoggedIn);
+        console.log('userloginn', userLoggedIn);
         try {
             await this.userLogin.delete({ username: userLoggedIn.username });
         }
         catch (err) {
-            this.logger.error("Logout Error: ", err.message);
+            this.logger.error('Logout Error: ', err.message);
             throw new Error(err.message);
         }
     }
     async validateAccessToken(accessToken) {
         try {
-            const validate = await this.jwtService.verify(accessToken, this.configService.get("jwtAuth").access_token_secret);
+            const validate = await this.jwtService.verify(accessToken, this.configService.get('jwtAuth').access_token_secret);
             if (!validate)
                 throw new common_1.BadRequestException();
             return { is_valid: true };
@@ -134,7 +143,9 @@ AuthService = AuthService_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(1, (0, typeorm_2.InjectRepository)(user_entity_1.User)),
     __param(2, (0, typeorm_2.InjectRepository)(phien_dang_nhap_entity_1.PhienDangNhap)),
+    __param(3, (0, typeorm_2.InjectRepository)(phan_quyen_entity_1.PhanQuyen)),
     __metadata("design:paramtypes", [config_1.ConfigService,
+        typeorm_1.Repository,
         typeorm_1.Repository,
         typeorm_1.Repository,
         jwt_1.JwtService])

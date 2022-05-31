@@ -10,10 +10,11 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { User } from 'src/database/entities/user.entity';
 import { PhienDangNhap } from 'src/database/entities/phien_dang_nhap.entity';
+import { PhanQuyen } from 'src/database/entities/phan_quyen.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([HocVien, User, PhienDangNhap]),
+    TypeOrmModule.forFeature([HocVien, User, PhienDangNhap, PhanQuyen]),
 
     PassportModule,
     JwtModule.registerAsync({

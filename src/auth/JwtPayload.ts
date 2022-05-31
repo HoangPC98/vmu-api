@@ -1,13 +1,10 @@
-import { Action, Permission, Role } from '../database/entities/phan_quyen.entity'
+import { Role } from "src/dataTypes/enum.types";
+
 
 export type JwtPayload = {
   user_id: number;
   username: string;
   email: string;
-  // permissions: JSON;
+  permissions: JSON;
   user_type: Role;
 };
-
-
-
-

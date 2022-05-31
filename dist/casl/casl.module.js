@@ -9,12 +9,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CaslModule = void 0;
 const common_1 = require("@nestjs/common");
 const casl_ability_factory_1 = require("./casl-ability.factory");
+const PoliciesGuard_1 = require("./guards/PoliciesGuard");
 let CaslModule = class CaslModule {
 };
 CaslModule = __decorate([
     (0, common_1.Module)({
-        providers: [casl_ability_factory_1.CaslAbilityFactory],
-        exports: [casl_ability_factory_1.CaslAbilityFactory],
+        providers: [casl_ability_factory_1.CaslAbilityFactory, PoliciesGuard_1.PoliciesGuard],
+        exports: [casl_ability_factory_1.CaslAbilityFactory, PoliciesGuard_1.PoliciesGuard],
     })
 ], CaslModule);
 exports.CaslModule = CaslModule;

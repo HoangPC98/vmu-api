@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HocVien = void 0;
 const typeorm_1 = require("typeorm");
+const bang_diem_entity_1 = require("./bang_diem.entity");
 const base_entity_1 = require("./base.entity");
 const chuyen_nganh_entity_1 = require("./chuyen_nganh.entity");
 const khoa_entity_1 = require("./khoa.entity");
@@ -31,6 +32,11 @@ __decorate([
     __metadata("design:type", String)
 ], HocVien.prototype, "id_khoa", void 0);
 __decorate([
+    (0, typeorm_1.OneToMany)(() => bang_diem_entity_1.BangDiem, (bangDiem) => bangDiem.id_hoc_vien, { cascade: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'user_id' }),
+    __metadata("design:type", Array)
+], HocVien.prototype, "bangDiem", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => khoa_entity_1.Khoa),
     (0, typeorm_1.JoinColumn)({ name: 'id_khoa' }),
     __metadata("design:type", khoa_entity_1.Khoa)
@@ -41,13 +47,9 @@ __decorate([
 ], HocVien.prototype, "id_chuyen_nganh", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => chuyen_nganh_entity_1.ChuyenNganh),
-    (0, typeorm_1.JoinColumn)({ name: 'id_chuyen_nghanh' }),
+    (0, typeorm_1.JoinColumn)({ name: 'id_chuyen_nganh' }),
     __metadata("design:type", chuyen_nganh_entity_1.ChuyenNganh)
 ], HocVien.prototype, "chuyenNganh", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: false }),
-    __metadata("design:type", String)
-], HocVien.prototype, "ho_ten", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)

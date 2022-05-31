@@ -1,6 +1,6 @@
 export default () => ({
   env: process.env.NODE_ENV || 'development',
-  port: parseInt(process.env.PORT, 10) || 3000,
+  port: parseInt(process.env.PORT, 10) || 3002,
   database: {
     type: 'postgres',
     username: process.env.POSTGRES_USER || 'vmu_user',
@@ -11,7 +11,7 @@ export default () => ({
     logging: process.env.DB_LOGGING ? true : false,
   },
   jwtAuth: {
-    access_token_ttl: process.env.JWT_ACCESS_TOKEN_TTL || '15m',
+    access_token_ttl: process.env.JWT_ACCESS_TOKEN_TTL || '1d',
     jwt_token_secret: process.env.JWT_TOKEN_SECRET || 'vmu_secret',
     refresh_token_ttl: process.env.JWT_REFRESH_TOKEN_TTL || '7d',
   },

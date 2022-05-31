@@ -29,6 +29,7 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
             username: payload.username,
             user_type: payload.user_type,
             email: payload.email,
+            permissions: payload.permissions
         };
     }
 };

@@ -35,7 +35,7 @@ __decorate([
     __metadata("design:type", String)
 ], ThongBao.prototype, "file_dinh_kem", void 0);
 ThongBao = __decorate([
-    (0, typeorm_1.Entity)('thong_bao')
+    (0, typeorm_1.Entity)('ThongBao')
 ], ThongBao);
 exports.ThongBao = ThongBao;
 //# sourceMappingURL=thong_bao.entity.js.map

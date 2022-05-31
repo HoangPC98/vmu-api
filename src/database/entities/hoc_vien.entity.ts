@@ -6,7 +6,9 @@ import {
   JoinColumn,
   OneToOne,
   PrimaryColumn,
+  OneToMany,
 } from 'typeorm';
+import { BangDiem } from './bang_diem.entity';
 import CustomBaseEntity from './base.entity';
 import { ChuyenNganh } from './chuyen_nganh.entity';
 import { Khoa } from './khoa.entity';
@@ -24,6 +26,9 @@ export class HocVien extends CustomBaseEntity {
   @Column({ nullable: false })
   id_khoa: string;
 
+  @OneToMany(() => BangDiem, (bangDiem) => bangDiem.id_hoc_vien,{cascade: true})
+  @JoinColumn({ name: 'user_id' })
+  bangDiem: BangDiem[];
 
   @ManyToOne(() => Khoa)
   @JoinColumn({ name: 'id_khoa' })
@@ -33,17 +38,12 @@ export class HocVien extends CustomBaseEntity {
   id_chuyen_nganh: string;
 
   @ManyToOne(() => ChuyenNganh)
-  @JoinColumn({ name: 'id_chuyen_nghanh' })
+  @JoinColumn({ name: 'id_chuyen_nganh' })
   chuyenNganh: ChuyenNganh;
-
-
-  @Column({ nullable: false })
-  ho_ten: string;
 
   @Column()
   diem_dau_vao: number;
 
   @Column()
   trang_thai: string;
-  
 }

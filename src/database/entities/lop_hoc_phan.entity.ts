@@ -1,3 +1,4 @@
+import { Weekday } from 'src/dataTypes/enum.types';
 import {
   Entity,
   Column,
@@ -5,30 +6,49 @@ import {
   ManyToOne,
   JoinColumn,
   OneToOne,
-	PrimaryColumn,
+  PrimaryColumn,
 } from 'typeorm';
 import CustomBaseEntity from './base.entity';
+import { GiangVien } from './giang_vien.entity';
+import { HocPhan } from './hoc_phan.entity';
 
 @Entity('LopHocPhan')
 export class LopHocPhan extends CustomBaseEntity {
-	@PrimaryColumn()
-	id_mon: string;
+  @PrimaryColumn()
+  id: number;
 
-	@Column()
-	id_giang_vien: number;
+  @Column()
+  id_mon: number;
 
-	@Column()
-	lich_hoc_from: Date;
+  @ManyToOne(() => HocPhan, (hoc_phan) => hoc_phan.id)
+  @JoinColumn({ name: 'id_mon' })
+  hocPhan: HocPhan;
 
-	@Column()
-	lich_hoc_to: Date;
+  @Column()
+  id_giang_vien: number;
 
-	@Column()
-	thoi_khoa_bieu: string;
+  @ManyToOne(() => GiangVien, (giang_vien) => giang_vien.user_id)
+  @JoinColumn({ name: 'id_giang_vien' })
+  giangVien: GiangVien;
 
-	@Column()
-	so_sv_toi_da: number;
+  @Column({ nullable: true})
+  ngay_bat_dau: Date;
 
-	@Column()
-	so_sv: number;
+  @Column({ nullable: false})
+  ngay_ket_thuc: Date;
+
+  @Column()
+  ngay_hoc: Weekday;
+
+  // @Column()
+  // tiet_hoc: number;
+
+  @Column()
+  si_so_max: number;
+
+  @Column()
+  si_so_min: number;
+
+  @Column({ nullable: true, default: false })
+  isactive: boolean;
 }
