@@ -1,3 +1,4 @@
+import { Role } from 'src/dataTypes/enum.types';
 import {
   Entity,
   Column,
@@ -11,25 +12,9 @@ import {
 import CustomBaseEntity from './base.entity';
 import { User } from './user.entity';
 
-export enum Action {
-  CREATE = 'create',
-  READ = 'read',
-  UPDATE = 'update',
-  DELETE = 'delete',
-  ACCESS_API = 'access_api',
-}
+import { Action } from '../../dataTypes/enum.types'
 
-export enum Role {
-  GeneralUser = 'general_user',
-  HocVien = 'hoc_vien',
-  GiangVien = 'giang_vien',
-  Admin = 'admin',
-}
 
-export type Permission = {
-  action: Action;
-  subject: string;
-};
 @Entity('PhanQuyen')
 export class PhanQuyen extends CustomBaseEntity {
   @PrimaryColumn()

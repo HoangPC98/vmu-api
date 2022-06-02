@@ -37,12 +37,11 @@ export class AuthService {
   ) {}
 
   async signUp(signUpDto: SignUpDto) {
-    console.log('OKOOKOKO');
+    console.log('OKO sadfasd');
     const foundUser = await this.userRepository.findOne({
       where: { username: signUpDto.username, email: signUpDto.email },
     });
 
-    console.log('foundUser', foundUser);
 
     if (foundUser)
       throw new BadRequestException(
@@ -50,11 +49,7 @@ export class AuthService {
       );
     try {
       let newUser = new User();
-      newUser.username = signUpDto.username;
-      newUser.email = signUpDto.email;
-      newUser.password = signUpDto.password;
-      newUser.user_type = signUpDto.user_type || Role.GeneralUser;
-      console.log('new user created', newUser);
+      newUser = Object.assign(newUser, signUpDto);
       const result = await this.userRepository.save(newUser);
       return {
         message: 'ok',
@@ -68,7 +63,7 @@ export class AuthService {
 
   async login(username: string, password: string) {
     const FUNC_NAME = 'login';
-
+    console.log('okokoko');
     const foundUser = await this.userRepository.findOne({
       where: { username: username, password: password },
       // relations: ['role'],
@@ -96,7 +91,7 @@ export class AuthService {
           role: foundUser.user_type,
         });
 
-        console.log('getPhanQuyen', getPhanQuyen)
+        console.log('getPhanQuyen', getPhanQuyen);
         const payload: JwtPayload = {
           user_id: foundUser.id,
           username: username,

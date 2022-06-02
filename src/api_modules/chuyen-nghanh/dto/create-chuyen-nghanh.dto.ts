@@ -8,6 +8,7 @@ export class CreateChuyenNganhDto {
   @IsNotEmpty()
   @IsNumber()
   id: string;
+
   @ApiProperty({
     example: 'ki thuat phan mem',
   })

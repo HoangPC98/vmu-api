@@ -1,8 +1,8 @@
 export enum TrinhDo {
-  DAI_HOC = 'dai_hoc',
-  THAC_SI = 'thac_si',
-  TIEN_SI = 'tien_si',
-  GIAO_SU = 'giao_su',
+  DAI_HOC = 'đại học',
+  THAC_SI = 'thạc sĩ',
+  TIEN_SI = 'tiến sĩ',
+  GIAO_SU = 'giáo sư',
 }
 
 export enum Action {

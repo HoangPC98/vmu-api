@@ -31,4 +31,6 @@ export class LopHocPhanController {
   remove(@Param('id') id: string) {
     return this.lopHocPhanService.remove(+id);
   }
+
+
 }

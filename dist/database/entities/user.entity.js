@@ -9,17 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = exports.GioiTinh = void 0;
+exports.User = void 0;
+const enum_types_1 = require("../../dataTypes/enum.types");
 const typeorm_1 = require("typeorm");
 const base_entity_1 = require("./base.entity");
 const hoc_vien_entity_1 = require("./hoc_vien.entity");
 const phan_quyen_entity_1 = require("./phan_quyen.entity");
-var GioiTinh;
-(function (GioiTinh) {
-    GioiTinh["NAM"] = "male";
-    GioiTinh["NU"] = "female";
-    GioiTinh["KHAC"] = "other";
-})(GioiTinh = exports.GioiTinh || (exports.GioiTinh = {}));
 let User = class User extends base_entity_1.default {
 };
 __decorate([
@@ -53,11 +48,11 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "ho_ten", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], User.prototype, "ngay_sinh", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "gioi_tinh", void 0);
 __decorate([
@@ -73,7 +68,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "dia_chi", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "trang_thai", void 0);
 User = __decorate([

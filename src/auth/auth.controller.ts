@@ -36,21 +36,6 @@ export class AuthController {
     };
   }
 
-  // @Public()
-  // @ApiResponse({
-  //   status: 201,
-  //   description: 'return access token and refresh token',
-  // })
-  // @Post('refresh')
-  // async refreshTokens(@Body() refreshTokenDto: RefreshTokenDto): Promise<any> {
-  //   const token = await this.authService.refreshTokens(
-  //     refreshTokenDto.refreshToken,
-  //   );
-  //   return {
-  //     result: token,
-  //   };
-  // }
-
   @ApiResponse({
     status: 200,
     description: 'verify if logged in',

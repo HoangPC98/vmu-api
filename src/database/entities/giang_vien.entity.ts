@@ -1,3 +1,4 @@
+import { TrinhDo } from 'src/dataTypes/enum.types';
 import {
   Entity,
   Column,
@@ -14,12 +15,6 @@ import { ChuyenNganh } from './chuyen_nganh.entity';
 import { Khoa } from './khoa.entity';
 import { User } from './user.entity';
 
-export enum TrinhDo {
-  DAI_HOC = 'dai_hoc',
-  THAC_SI = 'thac_si',
-  TIEN_SI = 'tien_si',
-  GIAO_SU = 'giao_su',
-}
 
 
 @Entity('GiangVien')

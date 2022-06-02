@@ -77,6 +77,25 @@
 
 [
   {
+    "action":"create",
+    "subject":"PhanLop"
+  },
+  {
+    "action":"read",
+    "subject":"PhanLop"
+  },
+  {
+    "action":"update",
+    "subject":"PhanLop"
+  },
+  {
+    "action":"read",
+    "subject":"BangDiem"
+  }
+]
+
+[
+  {
     "action":"manage",
     "subject":"BangDiem"
   }

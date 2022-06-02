@@ -1,4 +1,5 @@
 
+import { GioiTinh, Role } from 'src/dataTypes/enum.types';
 import {
   Entity,
   Column,
@@ -10,13 +11,8 @@ import {
 import CustomBaseEntity from './base.entity';
 import { HocVien } from './hoc_vien.entity';
 import { Khoa } from './khoa.entity';
-import { PhanQuyen, Role } from './phan_quyen.entity';
+import { PhanQuyen} from './phan_quyen.entity';
 
-export enum GioiTinh {
-  NAM = 'male',
-  NU = 'female',
-  KHAC = 'other',
-}
 
 @Entity('User')
 export class User extends CustomBaseEntity {
@@ -43,10 +39,10 @@ export class User extends CustomBaseEntity {
   @Column({ nullable: false })
   ho_ten: string;
 
-  @Column()
+  @Column({ nullable: false })
   ngay_sinh: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   gioi_tinh: GioiTinh;
 
   @Column({ nullable: true })
@@ -58,6 +54,6 @@ export class User extends CustomBaseEntity {
   @Column({ nullable: true })
   dia_chi: string;
 
-  @Column()
+  @Column({ nullable: true })
   trang_thai: string;
 }

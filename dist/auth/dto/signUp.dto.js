@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SignUpDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-const phan_quyen_entity_1 = require("../../database/entities/phan_quyen.entity");
+const enum_types_1 = require("../../dataTypes/enum.types");
 class SignUpDto {
 }
 __decorate([
@@ -33,14 +33,14 @@ __decorate([
 ], SignUpDto.prototype, "password", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: 'Nguyen Hoang Hai'
+        example: 'Nguyen Hoang Hai',
     }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], SignUpDto.prototype, "ho_ten", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: 'hai68510@st.vimaru.edu.vn'
+        example: 'hai68510@st.vimaru.edu.vn',
     }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
@@ -48,10 +48,15 @@ __decorate([
 ], SignUpDto.prototype, "email", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: phan_quyen_entity_1.Role.GeneralUser
+        example: enum_types_1.Role.GeneralUser,
     }),
-    (0, class_validator_1.IsEnum)([phan_quyen_entity_1.Role.GeneralUser, phan_quyen_entity_1.Role.Admin, phan_quyen_entity_1.Role.GiangVien, phan_quyen_entity_1.Role.HocVien]),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)([enum_types_1.Role.GeneralUser, enum_types_1.Role.Admin, enum_types_1.Role.GiangVien, enum_types_1.Role.HocVien]),
     __metadata("design:type", String)
 ], SignUpDto.prototype, "user_type", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], SignUpDto.prototype, "ngay_sinh", void 0);
 exports.SignUpDto = SignUpDto;
 //# sourceMappingURL=signUp.dto.js.map

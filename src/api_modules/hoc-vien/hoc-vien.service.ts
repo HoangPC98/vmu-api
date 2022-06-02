@@ -6,7 +6,8 @@ import { Repository } from 'typeorm';
 import { CreateHocVienDto } from './dto/create-hoc-vien.dto';
 import { UpdateHocVienDto } from './dto/update-hoc-vien.dto';
 import { USER_NAME_HOC_VIEN_PREFIX, EMAIL_DOMAIN } from '../../constants/user.constant';
-import { Role } from 'src/database/entities/phan_quyen.entity';
+import { Role } from 'src/dataTypes/enum.types';
+
 
 @Injectable()
 export class HocVienService {

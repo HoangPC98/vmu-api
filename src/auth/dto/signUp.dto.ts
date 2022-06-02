@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { Role } from 'src/database/entities/phan_quyen.entity';
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Role } from 'src/dataTypes/enum.types';
 
 export class SignUpDto {
   @ApiProperty({
@@ -18,21 +18,25 @@ export class SignUpDto {
   password: string;
 
   @ApiProperty({
-    example: 'Nguyen Hoang Hai'
+    example: 'Nguyen Hoang Hai',
   })
   @IsString()
   ho_ten: string;
 
   @ApiProperty({
-    example: 'hai68510@st.vimaru.edu.vn'
+    example: 'hai68510@st.vimaru.edu.vn',
   })
   @IsNotEmpty()
   @IsString()
   email: string;
 
   @ApiProperty({
-    example: Role.GeneralUser
+    example: Role.GeneralUser,
   })
+  @IsOptional()
   @IsEnum([Role.GeneralUser, Role.Admin, Role.GiangVien, Role.HocVien])
-  user_type: Role;
+  user_type?: Role;
+
+  @IsOptional()
+  ngay_sinh: string;
 }

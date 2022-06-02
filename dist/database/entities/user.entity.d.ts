@@ -1,11 +1,7 @@
+import { GioiTinh, Role } from 'src/dataTypes/enum.types';
 import CustomBaseEntity from './base.entity';
 import { HocVien } from './hoc_vien.entity';
-import { PhanQuyen, Role } from './phan_quyen.entity';
-export declare enum GioiTinh {
-    NAM = "male",
-    NU = "female",
-    KHAC = "other"
-}
+import { PhanQuyen } from './phan_quyen.entity';
 export declare class User extends CustomBaseEntity {
     id: number;
     user_type: Role;

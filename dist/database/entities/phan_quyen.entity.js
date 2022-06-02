@@ -9,25 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PhanQuyen = exports.Role = exports.Action = void 0;
+exports.PhanQuyen = void 0;
+const enum_types_1 = require("../../dataTypes/enum.types");
 const typeorm_1 = require("typeorm");
 const base_entity_1 = require("./base.entity");
 const user_entity_1 = require("./user.entity");
-var Action;
-(function (Action) {
-    Action["CREATE"] = "create";
-    Action["READ"] = "read";
-    Action["UPDATE"] = "update";
-    Action["DELETE"] = "delete";
-    Action["ACCESS_API"] = "access_api";
-})(Action = exports.Action || (exports.Action = {}));
-var Role;
-(function (Role) {
-    Role["GeneralUser"] = "general_user";
-    Role["HocVien"] = "hoc_vien";
-    Role["GiangVien"] = "giang_vien";
-    Role["Admin"] = "admin";
-})(Role = exports.Role || (exports.Role = {}));
 let PhanQuyen = class PhanQuyen extends base_entity_1.default {
 };
 __decorate([

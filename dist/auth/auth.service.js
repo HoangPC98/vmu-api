@@ -22,7 +22,6 @@ const jwt_1 = require("@nestjs/jwt");
 const phien_dang_nhap_entity_1 = require("../database/entities/phien_dang_nhap.entity");
 const user_entity_1 = require("../database/entities/user.entity");
 const phan_quyen_entity_1 = require("../database/entities/phan_quyen.entity");
-const enum_types_1 = require("../dataTypes/enum.types");
 let AuthService = AuthService_1 = class AuthService {
     constructor(configService, userRepository, userLogin, phanQuyenRepo, jwtService) {
         this.configService = configService;
@@ -33,20 +32,15 @@ let AuthService = AuthService_1 = class AuthService {
         this.logger = new common_1.Logger(AuthService_1.name);
     }
     async signUp(signUpDto) {
-        console.log('OKOOKOKO');
+        console.log('OKO sadfasd');
         const foundUser = await this.userRepository.findOne({
             where: { username: signUpDto.username, email: signUpDto.email },
         });
-        console.log('foundUser', foundUser);
         if (foundUser)
             throw new common_1.BadRequestException('this user name or email exist, please try again');
         try {
             let newUser = new user_entity_1.User();
-            newUser.username = signUpDto.username;
-            newUser.email = signUpDto.email;
-            newUser.password = signUpDto.password;
-            newUser.user_type = signUpDto.user_type || enum_types_1.Role.GeneralUser;
-            console.log('new user created', newUser);
+            newUser = Object.assign(newUser, signUpDto);
             const result = await this.userRepository.save(newUser);
             return {
                 message: 'ok',
@@ -60,6 +54,7 @@ let AuthService = AuthService_1 = class AuthService {
     }
     async login(username, password) {
         const FUNC_NAME = 'login';
+        console.log('okokoko');
         const foundUser = await this.userRepository.findOne({
             where: { username: username, password: password },
         });
