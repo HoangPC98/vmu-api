@@ -4,6 +4,6 @@ import { User } from './user.entity';
 export declare class PhanQuyen extends CustomBaseEntity {
     role: Role;
     mo_ta: string;
-    quyen: JSON;
+    quyen: string;
     user: User[];
 }

@@ -25,8 +25,8 @@ __decorate([
     __metadata("design:type", String)
 ], PhanQuyen.prototype, "mo_ta", void 0);
 __decorate([
-    (0, typeorm_1.Column)('json', { array: true }),
-    __metadata("design:type", Object)
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
 ], PhanQuyen.prototype, "quyen", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => user_entity_1.User, (user) => user.user_type),

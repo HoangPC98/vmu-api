@@ -23,8 +23,8 @@ export class PhanQuyen extends CustomBaseEntity {
   @Column()
   mo_ta: string;
 
-  @Column('json', { array: true })
-  quyen: JSON;
+  @Column()
+  quyen: string;
 
   @OneToMany(()=> User, (user: User) => user.user_type)
   @JoinColumn({name: 'user_type'})

@@ -53,8 +53,8 @@ let AuthService = AuthService_1 = class AuthService {
         }
     }
     async login(username, password) {
+        console.log('asd');
         const FUNC_NAME = 'login';
-        console.log('okokoko');
         const foundUser = await this.userRepository.findOne({
             where: { username: username, password: password },
         });

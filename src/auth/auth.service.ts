@@ -42,7 +42,6 @@ export class AuthService {
       where: { username: signUpDto.username, email: signUpDto.email },
     });
 
-
     if (foundUser)
       throw new BadRequestException(
         'this user name or email exist, please try again',
@@ -62,8 +61,9 @@ export class AuthService {
   }
 
   async login(username: string, password: string) {
+    console.log('asd');
+
     const FUNC_NAME = 'login';
-    console.log('okokoko');
     const foundUser = await this.userRepository.findOne({
       where: { username: username, password: password },
       // relations: ['role'],
